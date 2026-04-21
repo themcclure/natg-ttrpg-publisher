@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Placeholder portrait of Commander Val Thelor">
+  <rect width="400" height="400" fill="#1f3a5f"/>
+  <circle cx="200" cy="160" r="70" fill="#8dbce8"/>
+  <rect x="120" y="240" width="160" height="120" fill="#8dbce8"/>
+  <text x="200" y="380" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="20">Val Thelor</text>
+</svg>
