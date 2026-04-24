@@ -14,21 +14,12 @@ Every markdown entry in any collection may carry these fields. `title` is the on
 
 | Field       | Type               | Required | Notes                                                                           |
 |-------------|--------------------|----------|---------------------------------------------------------------------------------|
-| `title`     | `string`           | No*      | Display name. If absent, derived from filename (see "Title resolution" below). |
+| `title`     | `string`           | **Yes**  | Display name. Non-empty. Missing or empty → build fails (R-F-12, R-F-13).       |
 | `aliases`   | `string[]`         | No       | Alternate names. Consumed by the wikilink resolver (ADR-0002).                  |
 | `summary`   | `string`           | No       | One-sentence description. Used on collection index pages under the title.      |
 | `portrait`  | `string`           | No       | Relative path to an image file within `src/content/` (the same path resolution as inline images, R-F-30). Rendered on the entity page; exact placement is a design decision (see `04-design.md`). |
 
-\* Required in practice for clean display, but absence is not a hard error — we fall back to the filename (R-F-12).
-
-### Title resolution
-
-For display:
-
-1. `title` frontmatter, if present and non-empty.
-2. Filename-derived: drop `.md` → replace `-` / `_` with spaces → title-case the result.
-
-Example: `captain-riker.md` with no `title` frontmatter → displayed as **Captain Riker**.
+Permissiveness policy: beyond `title`, all base fields and all type-specific fields below are optional in v1. The upstream authoring agent produces entries incrementally; strict schemas would break the build whenever a new entry lands without every field populated. Fields get promoted from optional to required as real-world data reveals which are universally present — see Open items at the bottom of this doc.
 
 ### Slug resolution
 
@@ -241,3 +232,4 @@ export const collections = {
 
 - Whether `status` (alive / deceased / missing) is worth adding to NPCs. Skipped for v1: status can be spoiler-adjacent (even in sanitized content), and a prose "believed to be deceased" sentence in the body is more nuanced than a frontmatter flag.
 - **Faction icon / sub-theme** (post-v1). Each faction may eventually want a visual signifier — an icon shown on the faction page and on entity pages that reference the faction, or a CSS sub-theme (accent color palette) applied when viewing content associated with that faction. Not implemented in v1; the schema will grow a field such as `icon` or `theme` when the design for it lands.
+- **Schema-tightening checkpoint** (triggered, not scheduled). After ~3 real play sessions — enough content that each collection has roughly 6–10 entries — audit frontmatter field presence. Fields that turn out to be universally populated in practice are candidates for promotion from optional to required. Also worth re-examining at that point: whether `summary`, `kind` (factions/locations), `class` (starships), and `sovereignty` (locations) have become de facto required. See [06-build-plan.md § Scheduled revisits](06-build-plan.md#scheduled-revisits).

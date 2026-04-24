@@ -1,0 +1,56 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import EntityMeta from '../../../components/EntityMeta.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('locations');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<'locations'> };
+const { entry } = Astro.props as Props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Layout title={d.title} description={d.summary}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Encyclopedia', href: '/encyclopedia/' },
+    { label: 'Locations', href: '/encyclopedia/locations/' },
+    { label: d.title },
+  ]} />
+  <article>
+    <h1>{d.title}</h1>
+    {d.aliases && d.aliases.length > 0 && (
+      <p class="aliases"><em>also: {d.aliases.join(', ')}</em></p>
+    )}
+    {d.portrait && <img src={d.portrait} alt={d.title} class="portrait" />}
+    <EntityMeta fields={[
+      { label: 'Kind', value: d.kind },
+      { label: 'Sovereignty', value: d.sovereignty },
+      { label: 'Within', value: d.container },
+    ]} />
+
+    {/* M3 placeholder for R-F-17 container hierarchy. Full breadcrumb chain
+        (ancestors → this) and the reverse "Contains" list land in M4-full. */}
+    <aside class="hierarchy" aria-label="Location hierarchy (placeholder)">
+      {d.container ? (
+        <p class="hierarchy-parent">Within: <em>{d.container}</em> <small>(link resolution pending M4-full)</small></p>
+      ) : (
+        <p class="hierarchy-parent"><em>Top-level location.</em></p>
+      )}
+    </aside>
+
+    <div class="body"><Content /></div>
+
+    <aside class="contains" aria-label="Contains (placeholder)">
+      <h2>Contains</h2>
+      <p><em>Child locations list lands in M4-full.</em></p>
+    </aside>
+  </article>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CurrentEpisodeCard from '../../components/CurrentEpisodeCard.astro';
+import { getCurrentEpisode, groupEpisodesBySeason } from '../../lib/episodes.ts';
+
+const current = await getCurrentEpisode();
+const seasons = await groupEpisodesBySeason();
+---
+<Layout title="Episode Log">
+  <Breadcrumbs crumbs={[{ label: 'Home', href: '/' }, { label: 'Episode Log' }]} />
+  <h1>Episode Log</h1>
+  <p>Session recaps and in-world handouts.</p>
+
+  {current && <CurrentEpisodeCard episode={current} heading="Most recent episode" />}
+
+  <h2>Seasons</h2>
+  <ul class="season-list">
+    {seasons.map((s) => (
+      <li>
+        <a href={`/episodes/${s.meta.season}/`}>
+          <strong>{s.meta.displayName}</strong>
+          <span class="count"> — {s.episodes.length} {s.episodes.length === 1 ? 'episode' : 'episodes'}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

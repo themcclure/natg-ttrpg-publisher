@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  aliases?: string[];
+  summary?: string;
+  portrait?: string;
+}
+const { href, title, aliases, summary, portrait } = Astro.props;
+---
+<li class="entity-card">
+  <a href={href}>
+    {portrait && <img src={portrait} alt="" class="portrait-thumb" />}
+    <div class="text">
+      <h3>{title}</h3>
+      {aliases && aliases.length > 0 && (
+        <p class="aliases"><em>also: {aliases.join(', ')}</em></p>
+      )}
+      {summary && <p class="summary">{summary}</p>}
+    </div>
+  </a>
+</li>

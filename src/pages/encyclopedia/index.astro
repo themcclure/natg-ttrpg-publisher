@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+const [npcs, factions, locations, starships, timelines] = await Promise.all([
+  getCollection('npcs'),
+  getCollection('factions'),
+  getCollection('locations'),
+  getCollection('starships'),
+  getCollection('timelines'),
+]);
+
+const sections = [
+  { href: '/encyclopedia/npcs/', title: 'NPCs', count: npcs.length },
+  { href: '/encyclopedia/factions/', title: 'Factions', count: factions.length },
+  { href: '/encyclopedia/locations/', title: 'Locations', count: locations.length },
+  { href: '/encyclopedia/starships/', title: 'Starships', count: starships.length },
+  { href: '/encyclopedia/timelines/', title: 'Timelines', count: timelines.length },
+];
+---
+<Layout title="Encyclopedia">
+  <Breadcrumbs crumbs={[{ label: 'Home', href: '/' }, { label: 'Encyclopedia' }]} />
+  <h1>Encyclopedia</h1>
+  <p>World reference: people, places, ships, and events the crew has encountered.</p>
+  <ul class="encyclopedia-tiles">
+    {sections.map((s) => (
+      <li>
+        <a href={s.href}>
+          <h2>{s.title}</h2>
+          <p>{s.count} {s.count === 1 ? 'entry' : 'entries'}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

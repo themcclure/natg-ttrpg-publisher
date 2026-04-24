@@ -238,6 +238,12 @@ M4-lite and the first deploy can ship in parallel with authoring real content in
 
 ---
 
+## Scheduled revisits
+
+Tasks pinned to events rather than dates. Revisit when the triggering condition is met.
+
+- **Content schema tightening** — trigger: ~3 real play sessions' worth of content has landed from the upstream agent (approximately 6–10 entries per collection). Audit frontmatter field presence; promote universally-populated fields from optional to required in [03-content-model.md](03-content-model.md) and [src/content.config.ts](../src/content.config.ts). Re-run the build against accumulated content to confirm the tightened schema holds.
+
 ## Out of scope for v1 (explicit)
 
 These are **not in any milestone**. Revisit post-launch:

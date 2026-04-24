@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import EntityCard from '../../../components/EntityCard.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('npcs')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+<Layout title="NPCs">
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Encyclopedia', href: '/encyclopedia/' },
+    { label: 'NPCs' },
+  ]} />
+  <h1>NPCs</h1>
+  <p>People the crew has met or has knowledge of.</p>
+  <ul class="entity-list">
+    {entries.map((e) => (
+      <EntityCard
+        href={`/encyclopedia/npcs/${e.id}/`}
+        title={e.data.title}
+        aliases={e.data.aliases}
+        summary={e.data.summary}
+        portrait={e.data.portrait}
+      />
+    ))}
+  </ul>
+</Layout>

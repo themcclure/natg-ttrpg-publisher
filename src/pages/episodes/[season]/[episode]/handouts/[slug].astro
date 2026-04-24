@@ -1,0 +1,52 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../../../components/Breadcrumbs.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { seasonOf } from '../../../../../lib/episodes.ts';
+import { loadSeason, episodeFromHandoutId } from '../../../../../lib/content.ts';
+
+export async function getStaticPaths() {
+  const handouts = await getCollection('handouts');
+  const paths = [];
+  for (const entry of handouts) {
+    const episode = episodeFromHandoutId(entry.id);
+    if (!episode) continue;
+    const season = seasonOf(episode);
+    const slug = entry.id.split('/').slice(1).join('-');
+    paths.push({
+      params: { season, episode, slug },
+      props: { entry, episode, season },
+    });
+  }
+  return paths;
+}
+
+type Props = {
+  entry: CollectionEntry<'handouts'>;
+  episode: string;
+  season: string;
+};
+const { entry, episode, season } = Astro.props as Props;
+const { Content } = await render(entry);
+const d = entry.data;
+const seasonMeta = await loadSeason(season);
+
+// Look up episode title for the breadcrumb.
+const episodes = await getCollection('episodes');
+const epEntry = episodes.find((e) => e.data.episode === episode);
+const epLabel = epEntry ? `${episode} ${epEntry.data.title}` : episode;
+---
+<Layout title={d.title} description={d.summary}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Episode Log', href: '/episodes/' },
+    { label: seasonMeta.displayName, href: `/episodes/${season}/` },
+    { label: epLabel, href: `/episodes/${season}/${episode}/` },
+    { label: d.title },
+  ]} />
+  <article>
+    <h1>{d.title}</h1>
+    {d.kind && <p class="kind"><em>{d.kind}</em></p>}
+    <div class="body"><Content /></div>
+  </article>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import EntityMeta from '../../../components/EntityMeta.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('factions');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<'factions'> };
+const { entry } = Astro.props as Props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Layout title={d.title} description={d.summary}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Encyclopedia', href: '/encyclopedia/' },
+    { label: 'Factions', href: '/encyclopedia/factions/' },
+    { label: d.title },
+  ]} />
+  <article>
+    <h1>{d.title}</h1>
+    {d.aliases && d.aliases.length > 0 && (
+      <p class="aliases"><em>also: {d.aliases.join(', ')}</em></p>
+    )}
+    {d.portrait && <img src={d.portrait} alt={`Emblem of ${d.title}`} class="portrait" />}
+    <EntityMeta fields={[{ label: 'Kind', value: d.kind }]} />
+    <div class="body"><Content /></div>
+  </article>
+</Layout>

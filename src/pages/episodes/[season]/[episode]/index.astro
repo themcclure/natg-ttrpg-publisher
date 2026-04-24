@@ -1,0 +1,82 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { seasonOf } from '../../../../lib/episodes.ts';
+import { loadSeason, listPdfHandouts, episodeFromHandoutId } from '../../../../lib/content.ts';
+
+export async function getStaticPaths() {
+  const episodes = await getCollection('episodes');
+  return episodes.map((entry) => ({
+    params: { season: seasonOf(entry.data.episode), episode: entry.data.episode },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<'episodes'> };
+const { entry } = Astro.props as Props;
+const { Content } = await render(entry);
+const d = entry.data;
+const season = seasonOf(d.episode);
+const seasonMeta = await loadSeason(season);
+
+const mdHandouts = (await getCollection('handouts'))
+  .filter((h) => episodeFromHandoutId(h.id) === d.episode)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const pdfHandouts = await listPdfHandouts(d.episode);
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+function handoutSlug(id: string): string {
+  // id shape: "S00E01/captains-log" → slug "captains-log"
+  const parts = id.split('/');
+  return parts.slice(1).join('-');
+}
+---
+<Layout title={`${d.episode} — ${d.title}`} description={d.teaser}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Episode Log', href: '/episodes/' },
+    { label: seasonMeta.displayName, href: `/episodes/${season}/` },
+    { label: `${d.episode} ${d.title}` },
+  ]} />
+  <article>
+    <h1>{d.episode} — {d.title}</h1>
+    <p class="air-date"><time datetime={d.airDate}>First played: {d.airDate}</time></p>
+    {d.aliases && d.aliases.length > 0 && (
+      <p class="aliases"><em>also: {d.aliases.join(', ')}</em></p>
+    )}
+    {d.portrait && <img src={d.portrait} alt={`${d.episode} key art`} class="portrait" />}
+    <div class="body"><Content /></div>
+
+    {(mdHandouts.length > 0 || pdfHandouts.length > 0) && (
+      <section class="handouts" aria-labelledby="handouts-heading">
+        <h2 id="handouts-heading">Handouts</h2>
+        <ul>
+          {mdHandouts.map((h) => (
+            <li>
+              <a href={`/episodes/${season}/${d.episode}/handouts/${handoutSlug(h.id)}/`}>
+                {h.data.title}
+              </a>
+              {h.data.kind && <span class="kind"> — {h.data.kind}</span>}
+            </li>
+          ))}
+          {pdfHandouts.map((p) => (
+            <li>
+              <a href={`/handouts/${p.episode}/${p.filename}`} download>
+                {p.filename}
+              </a>
+              <span class="size"> ({formatBytes(p.size)}, PDF)</span>
+              <small> — direct-link placeholder pending M4-full asset routing</small>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</Layout>

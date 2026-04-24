@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { seasonOf } from '../lib/episodes.ts';
+interface Props {
+  episode: CollectionEntry<'episodes'>;
+  heading?: string;
+}
+const { episode, heading = 'Current episode' } = Astro.props;
+const season = seasonOf(episode.data.episode);
+const href = `/episodes/${season}/${episode.data.episode}/`;
+---
+<aside class="current-episode-card" aria-labelledby="current-episode-heading">
+  <h2 id="current-episode-heading">{heading}</h2>
+  <p class="episode-code">
+    <a href={href}>
+      <strong>{episode.data.episode}</strong> — {episode.data.title}
+    </a>
+  </p>
+  <p class="air-date">
+    <time datetime={episode.data.airDate}>First played: {episode.data.airDate}</time>
+  </p>
+  <p class="teaser">{episode.data.teaser}</p>
+</aside>

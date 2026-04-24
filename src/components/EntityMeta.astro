@@ -1,0 +1,21 @@
+---
+export interface MetaField {
+  label: string;
+  value: string | undefined;
+}
+interface Props {
+  fields: MetaField[];
+}
+const { fields } = Astro.props;
+const present = fields.filter((f) => f.value && f.value.trim() !== '');
+---
+{present.length > 0 && (
+  <dl class="entity-meta">
+    {present.map((f) => (
+      <div>
+        <dt>{f.label}</dt>
+        <dd>{f.value}</dd>
+      </div>
+    ))}
+  </dl>
+)}

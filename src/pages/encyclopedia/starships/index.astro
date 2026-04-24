@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import EntityCard from '../../../components/EntityCard.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('starships')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+<Layout title="Starships">
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Encyclopedia', href: '/encyclopedia/' },
+    { label: 'Starships' },
+  ]} />
+  <h1>Starships</h1>
+  <p>Vessels the crew has encountered or has records on.</p>
+  <ul class="entity-list">
+    {entries.map((e) => (
+      <EntityCard
+        href={`/encyclopedia/starships/${e.id}/`}
+        title={e.data.title}
+        aliases={e.data.aliases}
+        summary={e.data.summary}
+        portrait={e.data.portrait}
+      />
+    ))}
+  </ul>
+</Layout>

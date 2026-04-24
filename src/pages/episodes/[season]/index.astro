@@ -1,0 +1,39 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { groupEpisodesBySeason } from '../../../lib/episodes.ts';
+import type { SeasonMeta } from '../../../lib/content.ts';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const groups = await groupEpisodesBySeason();
+  return groups.map((g) => ({
+    params: { season: g.meta.season },
+    props: { meta: g.meta, episodes: g.episodes },
+  }));
+}
+
+type Props = { meta: SeasonMeta; episodes: CollectionEntry<'episodes'>[] };
+const { meta, episodes } = Astro.props as Props;
+---
+<Layout title={meta.displayName}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Episode Log', href: '/episodes/' },
+    { label: meta.displayName },
+  ]} />
+  <h1>{meta.displayName}</h1>
+
+  <ul class="episode-list">
+    {episodes.map((ep) => (
+      <li>
+        <a href={`/episodes/${meta.season}/${ep.data.episode}/`}>
+          <span class="code"><strong>{ep.data.episode}</strong></span>
+          <span class="title"> — {ep.data.title}</span>
+          <time class="air-date" datetime={ep.data.airDate}>{ep.data.airDate}</time>
+        </a>
+        <p class="teaser">{ep.data.teaser}</p>
+      </li>
+    ))}
+  </ul>
+</Layout>

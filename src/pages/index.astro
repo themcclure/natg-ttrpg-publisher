@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CurrentEpisodeCard from '../components/CurrentEpisodeCard.astro';
+import { getCurrentEpisode } from '../lib/episodes.ts';
+const current = await getCurrentEpisode();
+---
+<Layout title="NATG Encyclopedia" description="Player-facing encyclopedia for the Not All That Glitters Is Latinum Star Trek TTRPG campaign.">
+  <h1>NATG Encyclopedia</h1>
+  <p class="tagline">The player-facing reference for <em>Not All That Glitters Is Latinum</em>.</p>
+
+  {current && <CurrentEpisodeCard episode={current} />}
+
+  <nav aria-label="Sections" class="section-links">
+    <ul>
+      <li><a href="/characters/"><strong>Characters</strong> — the party.</a></li>
+      <li><a href="/encyclopedia/"><strong>Encyclopedia</strong> — NPCs, factions, locations, starships, timelines.</a></li>
+      <li><a href="/episodes/"><strong>Episode Log</strong> — session recaps and handouts.</a></li>
+    </ul>
+  </nav>
+</Layout>
