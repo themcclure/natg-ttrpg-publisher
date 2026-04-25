@@ -51,7 +51,7 @@ function handoutSlug(id: string): string {
     {d.aliases && d.aliases.length > 0 && (
       <p class="aliases"><em>also: {d.aliases.join(', ')}</em></p>
     )}
-    {d.portrait && <img src={d.portrait} alt={`${d.episode} key art`} class="portrait" />}
+    {d.portrait && <img src={`/_assets/${d.portrait}`} alt={`${d.episode} key art`} class="portrait" />}
     <div class="body"><Content /></div>
 
     {(mdHandouts.length > 0 || pdfHandouts.length > 0) && (
@@ -68,11 +68,10 @@ function handoutSlug(id: string): string {
           ))}
           {pdfHandouts.map((p) => (
             <li>
-              <a href={`/handouts/${p.episode}/${p.filename}`} download>
+              <a href={`/_assets/${p.filename}`} download>
                 {p.filename}
               </a>
               <span class="size"> ({formatBytes(p.size)}, PDF)</span>
-              <small> — direct-link placeholder pending M4-full asset routing</small>
             </li>
           ))}
         </ul>

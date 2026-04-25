@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'zod';
 
 // Shared frontmatter across every markdown collection (see specs/03-content-model.md).
 // `title` is the only universally-required field in v1 — everything else stays

@@ -10,7 +10,7 @@ const { href, title, aliases, summary, portrait } = Astro.props;
 ---
 <li class="entity-card">
   <a href={href}>
-    {portrait && <img src={portrait} alt="" class="portrait-thumb" />}
+    {portrait && <img src={`/_assets/${portrait}`} alt="" class="portrait-thumb" />}
     <div class="text">
       <h3>{title}</h3>
       {aliases && aliases.length > 0 && (

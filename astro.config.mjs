@@ -1,4 +1,8 @@
 import { defineConfig } from 'astro/config';
+import remarkWikilinks from './src/plugins/remark-wikilinks.ts';
 
-// Content collections, integrations, and site config arrive in M2/M3.
-export default defineConfig({});
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkWikilinks],
+  },
+});

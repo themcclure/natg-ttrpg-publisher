@@ -29,7 +29,7 @@ const d = entry.data;
     {d.aliases && d.aliases.length > 0 && (
       <p class="aliases"><em>also: {d.aliases.join(', ')}</em></p>
     )}
-    {d.portrait && <img src={d.portrait} alt={d.title} class="portrait" />}
+    {d.portrait && <img src={`/_assets/${d.portrait}`} alt={d.title} class="portrait" />}
     <EntityMeta fields={[
       { label: 'Kind', value: d.kind },
       { label: 'Sovereignty', value: d.sovereignty },
