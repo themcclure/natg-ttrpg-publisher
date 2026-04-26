@@ -71,9 +71,9 @@ out
 # Nuxt.js build / generate output
 .nuxt
 
-# Gatsby files
+# Gatsby files (we don't use Gatsby; the `public` rule it normally adds
+# would conflict with Astro/Vercel where public/ holds tracked static assets).
 .cache/
-public
 
 # vuepress build output
 .vuepress/dist

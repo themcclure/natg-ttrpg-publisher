@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="Placeholder deck plan of Starbase Kappa promenade">
+  <rect width="600" height="400" fill="#0a0a14"/>
+  <rect x="40" y="80" width="520" height="240" fill="none" stroke="#ff9966" stroke-width="3"/>
+  <rect x="60" y="100" width="120" height="80" fill="none" stroke="#ffcc33" stroke-width="2"/>
+  <text x="120" y="145" text-anchor="middle" fill="#ffcc33" font-family="monospace" font-size="14">THE COMET</text>
+  <rect x="220" y="100" width="120" height="80" fill="none" stroke="#66ccff" stroke-width="2"/>
+  <text x="280" y="145" text-anchor="middle" fill="#66ccff" font-family="monospace" font-size="14">SECURITY</text>
+  <rect x="380" y="100" width="180" height="80" fill="none" stroke="#66ccff" stroke-width="2"/>
+  <text x="470" y="145" text-anchor="middle" fill="#66ccff" font-family="monospace" font-size="14">DOCKING RING</text>
+  <text x="300" y="360" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="16">Starbase Kappa — Promenade (placeholder)</text>
+</svg>
