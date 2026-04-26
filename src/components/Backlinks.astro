@@ -1,0 +1,43 @@
+---
+import { getBacklinksFor, groupByCollection } from '../lib/cross-refs.ts';
+
+interface Props {
+  url: string;
+}
+const { url } = Astro.props;
+const refs = await getBacklinksFor(url);
+const grouped = groupByCollection(refs);
+
+const LABELS: Record<string, string> = {
+  characters: 'Characters',
+  npcs: 'NPCs',
+  factions: 'Factions',
+  locations: 'Locations',
+  starships: 'Starships',
+  timelines: 'Timelines',
+  episodes: 'Episodes',
+  handouts: 'Handouts',
+};
+const ORDER = [
+  'characters', 'npcs', 'factions', 'locations',
+  'starships', 'timelines', 'episodes', 'handouts',
+];
+const sections = ORDER
+  .filter((k) => grouped.has(k))
+  .map((k) => ({ key: k, label: LABELS[k] ?? k, items: grouped.get(k)! }));
+---
+{sections.length > 0 && (
+  <aside class="backlinks" aria-labelledby="backlinks-heading">
+    <h2 id="backlinks-heading">Referenced by</h2>
+    {sections.map((s) => (
+      <section>
+        <h3>{s.label}</h3>
+        <ul>
+          {s.items.map((r) => (
+            <li><a href={r.url}>{r.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </aside>
+)}

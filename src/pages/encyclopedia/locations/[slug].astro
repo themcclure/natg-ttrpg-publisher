@@ -2,6 +2,9 @@
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import EntityMeta from '../../../components/EntityMeta.astro';
+import Backlinks from '../../../components/Backlinks.astro';
+import { entityUrl } from '../../../lib/urls.ts';
+import { getLocationNode } from '../../../lib/locations.ts';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -16,6 +19,12 @@ type Props = { entry: CollectionEntry<'locations'> };
 const { entry } = Astro.props as Props;
 const { Content } = await render(entry);
 const d = entry.data;
+const node = await getLocationNode(entry.id);
+const url = entityUrl('locations', entry.id);
+
+// Container breadcrumb chain — root → parent (excluding self).
+const ancestors = node?.ancestors ?? [];
+const children = node?.children ?? [];
 ---
 <Layout title={d.title} description={d.summary}>
   <Breadcrumbs crumbs={[
@@ -33,24 +42,38 @@ const d = entry.data;
     <EntityMeta fields={[
       { label: 'Kind', value: d.kind },
       { label: 'Sovereignty', value: d.sovereignty },
-      { label: 'Within', value: d.container },
     ]} />
 
-    {/* M3 placeholder for R-F-17 container hierarchy. Full breadcrumb chain
-        (ancestors → this) and the reverse "Contains" list land in M4-full. */}
-    <aside class="hierarchy" aria-label="Location hierarchy (placeholder)">
-      {d.container ? (
-        <p class="hierarchy-parent">Within: <em>{d.container}</em> <small>(link resolution pending M4-full)</small></p>
-      ) : (
-        <p class="hierarchy-parent"><em>Top-level location.</em></p>
-      )}
-    </aside>
+    {ancestors.length > 0 ? (
+      <nav class="hierarchy" aria-label="Location hierarchy">
+        <span class="hierarchy-label">Within: </span>
+        <ol class="hierarchy-chain">
+          {ancestors.map((a) => (
+            <li><a href={a.url}>{a.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+    ) : node?.containerUnresolved ? (
+      <p class="hierarchy hierarchy-unresolved">
+        Within: <em>{node.containerRaw}</em> <small>(container reference unresolved)</small>
+      </p>
+    ) : (
+      <p class="hierarchy hierarchy-root"><em>Top-level location.</em></p>
+    )}
 
     <div class="body"><Content /></div>
 
-    <aside class="contains" aria-label="Contains (placeholder)">
-      <h2>Contains</h2>
-      <p><em>Child locations list lands in M4-full.</em></p>
-    </aside>
+    {children.length > 0 && (
+      <section class="contains" aria-labelledby="contains-heading">
+        <h2 id="contains-heading">Contains</h2>
+        <ul>
+          {children.map((c) => (
+            <li><a href={c.url}>{c.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <Backlinks url={url} />
   </article>
 </Layout>

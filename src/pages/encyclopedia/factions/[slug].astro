@@ -2,6 +2,8 @@
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import EntityMeta from '../../../components/EntityMeta.astro';
+import Backlinks from '../../../components/Backlinks.astro';
+import { entityUrl } from '../../../lib/urls.ts';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -32,5 +34,6 @@ const d = entry.data;
     {d.portrait && <img src={`/_assets/${d.portrait}`} alt={`Emblem of ${d.title}`} class="portrait" />}
     <EntityMeta fields={[{ label: 'Kind', value: d.kind }]} />
     <div class="body"><Content /></div>
+    <Backlinks url={entityUrl('factions', entry.id)} />
   </article>
 </Layout>

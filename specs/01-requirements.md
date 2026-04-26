@@ -97,8 +97,9 @@ Requirement IDs are stable. Other specs cite them (e.g. "satisfies R-F-12"). App
 ### Operational
 
 - **R-NF-18** Sync scripts and any helper CLIs exit with non-zero status on error, write human-readable errors to stderr, and never fail silently. Build-time issues are categorized:
-  - **Fail the build:** broken wikilinks (count exceeding a configurable threshold, default: any), malformed frontmatter (R-F-13), unreadable source files.
-  - **Warn only:** missing image/PDF assets (R-F-32), filename-fallback alt text (R-NF-19), ambiguous wikilinks where the author has not yet scoped.
+  - **Fail the build:** malformed frontmatter (R-F-13), unreadable source files, **container cycles** (locations forming a loop — these are structural errors, not authoring drift).
+  - **Warn only (default):** broken wikilinks, missing image/PDF assets (R-F-32), filename-fallback alt text (R-NF-19), ambiguous wikilinks where the author has not yet scoped, unresolved location `container` references.
+  - **Strict mode (opt-in):** setting `NATG_STRICT_LINKS=true` in the environment promotes broken-wikilink warnings to build failures (count exceeding a configurable threshold, default: any). Use in production CI; leave off for fixture/dev builds. Same rationale as the alt-text policy in R-NF-19: warnings surface drift without halting publication while content is being authored.
 - **R-NF-19** Alt text is an authoring convention: use Obsidian's `![[image.png|alt text]]` or standard markdown `![alt](path)`. Images falling through to the filename-based alt (R-F-30) emit a **build warning only** and never block the build or deploy. Filename-fallback alt is a valid published state.
 
 ---
