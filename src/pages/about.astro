@@ -6,33 +6,52 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
   <Breadcrumbs crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
   <h1>About</h1>
 
-  <h2>What this is</h2>
-  <p>
-    A player-facing encyclopedia for the Star Trek TTRPG campaign
-    <em>Not All That Glitters Is Latinum</em> (NATG). It records what the
-    player characters have encountered, been told, or could reasonably know.
-    It is not a GM reference; it contains no spoilers or hidden information.
-  </p>
+  <div class="about-body">
+    <h2>What this is</h2>
+    <p>
+      A player-facing encyclopedia for the Star Trek TTRPG campaign
+      <em>Not All That Glitters Is Latinum</em> (NATG). It records what the
+      player characters have encountered, been told, or could reasonably know.
+      It is not a GM reference; it contains no spoilers or hidden information.
+    </p>
 
-  <h2>Unofficial fan project</h2>
-  <p>
-    This site is an unofficial fan work. Star Trek, the starship insignias,
-    and all related marks and settings are trademarks of Paramount/CBS.
-    This site is not affiliated with, endorsed by, or sponsored by the
-    rights holders. No revenue is generated from this site.
-  </p>
+    <h2>Unofficial fan project</h2>
+    <p>
+      This site is an unofficial fan work. Star Trek, the starship insignias,
+      and all related marks and settings are trademarks of Paramount/CBS.
+      This site is not affiliated with, endorsed by, or sponsored by the
+      rights holders. No revenue is generated from this site.
+    </p>
 
-  <h2>License</h2>
-  <ul>
-    <li>
-      <strong>Publisher code</strong> (the Astro site, scripts, and
-      configuration) is licensed under the MIT license.
-      See <a href="https://github.com/themcclure/natg-ttrpg-publisher/blob/main/LICENSE">LICENSE</a>.
-    </li>
-    <li>
-      <strong>Campaign content</strong> (everything under
-      <code>src/content/</code> and <code>fixtures/natg-vault/</code>) —
-      rights retained by Mike McClure. Not open-licensed.
-    </li>
-  </ul>
+    <h2>License</h2>
+    <ul>
+      <li>
+        <strong>Publisher code</strong> (the Astro site, scripts, and
+        configuration) is licensed under the MIT license.
+        See <a href="https://github.com/themcclure/natg-ttrpg-publisher/blob/main/LICENSE">LICENSE</a>.
+      </li>
+      <li>
+        <strong>Campaign content</strong> (everything under
+        <code>src/content/</code> and <code>fixtures/natg-vault/</code>) —
+        rights retained by Mike McClure. Not open-licensed.
+      </li>
+    </ul>
+  </div>
 </Layout>
+
+<style>
+  .about-body {
+    max-width: var(--max-content);
+  }
+  .about-body h2 {
+    margin-top: var(--space-6);
+  }
+  .about-body em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+  .about-body strong {
+    color: var(--fg);
+  }
+</style>

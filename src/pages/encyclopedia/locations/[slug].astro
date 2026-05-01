@@ -77,3 +77,81 @@ const children = node?.children ?? [];
     <Backlinks url={url} />
   </article>
 </Layout>
+
+<style>
+  .hierarchy {
+    margin: 0 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    background: var(--tint-orange);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-size: var(--fs-sm);
+  }
+  .hierarchy-label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    font-size: 0.85em;
+    margin-right: var(--space-2);
+  }
+  .hierarchy-chain {
+    display: inline-flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: var(--space-2);
+    align-items: center;
+  }
+  .hierarchy-chain li {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .hierarchy-chain li:not(:last-child)::after {
+    content: '›';
+    color: var(--border);
+  }
+  .hierarchy-chain a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .hierarchy-chain a:hover { text-decoration: underline; }
+  .hierarchy-root,
+  .hierarchy-unresolved {
+    color: var(--muted);
+    font-style: normal;
+  }
+  .hierarchy-unresolved small {
+    margin-left: var(--space-2);
+    color: var(--broken);
+  }
+
+  .contains {
+    margin: var(--space-6) 0 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .contains h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--fs-lg);
+  }
+  .contains ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+  }
+  .contains li { margin: 0; }
+  .contains a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .contains a:hover { text-decoration: underline; }
+</style>

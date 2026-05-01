@@ -2,7 +2,7 @@
 
 Scope: phased implementation plan. Each milestone is a *shippable cut* of the project with concrete exit criteria. Milestones sequence to reduce rework: no milestone invalidates a prior one.
 
-This plan defers the test strategy (`05-test-plan.md`) and visual palette (Q03). Both are addressed once a skeleton exists to test and style against.
+This plan defers the test strategy (`05-test-plan.md`) until a skeleton exists to test against. The visual palette (Q03) was deferred until M1+M2 shipped a styleable skeleton; resolved 2026-04-26 ahead of M5 — see `04-design.md` § Visual direction.
 
 ---
 
@@ -162,16 +162,16 @@ Split into a pre-launch minimum and a post-launch full version.
 
 ### M5 — Styling pass
 
-**Goal.** Site matches the principles in `04-design.md`. Palette and typography answered (Q03).
+**Goal.** Site matches the principles in `04-design.md`. Palette and typography per the resolved Q03 values.
 
 **Deliverables.**
-- `src/styles/theme.css` with the full palette as CSS custom properties (ADR-0004).
+- `src/styles/theme.css` with the palette tokens from `04-design.md` § Visual direction as CSS custom properties (ADR-0004).
 - `src/styles/base.css` with resets, element defaults, and focus/skip-link behavior.
 - Component-level styles in each template's `<style>` block.
 - Responsive layout: mobile-first, with the two-column entity page above ~720px.
-- Self-hosted fonts (R-NF-15).
-- Honor `prefers-color-scheme` (if light + dark both committed) and `prefers-reduced-motion`.
-- A contrast audit pass against the chosen palette, resolving any AA failures.
+- Self-hosted Inter Variable in `public/fonts/` (R-NF-15).
+- Honor `prefers-reduced-motion`. Light-mode (`prefers-color-scheme: light`) is deferred — site ships dark-only.
+- A contrast audit on the rendered pages confirming the AA ratios documented in `04-design.md` hold up in practice.
 
 **Exit criteria.**
 - Every template matches its composition from `04-design.md`.
@@ -180,9 +180,9 @@ Split into a pre-launch minimum and a post-launch full version.
 - Site works with JavaScript disabled (R-NF-01).
 - R-NF-04 page-weight budget met on a representative entity page.
 
-**Size.** M. One to two days — driven by how fiddly Q03 ends up being.
+**Size.** M. One to two days.
 
-**Dependency.** This is the milestone that unblocks Q03; expect one iteration cycle with Mike between a draft palette and the accepted one.
+**Dependency.** Q03 was resolved ahead of this milestone (2026-04-26), so M5 starts from agreed values rather than negotiating them mid-implementation.
 
 ---
 
@@ -231,7 +231,7 @@ M4-lite and the first deploy can ship in parallel with authoring real content in
 |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | Obsidian wikilink corner cases not covered by ADR-0002 surface during M4-full.       | Log specific cases, patch ADR-0002 (or supersede with a follow-up ADR), don't widen scope silently.                                |
 | Source vault evolves faster than the publisher (new top-level folder appears).       | The sync script should log unknown top-level folders as a warning, not fail. Addressed at M1.                                     |
-| Q03 palette iteration stalls the styling pass.                                       | M5 can ship with a placeholder palette (plain neutral theme) and swap later; ADR-0004 makes palette a one-file change.            |
+| Rendered pages reveal palette/contrast issues not visible in the spec preview.       | The whole palette lives in `theme.css` per ADR-0004 — token tweaks are a one-file change. AA contrast was verified per-pair before M5; the risk now is edge cases (e.g. fg-on-tint at small sizes), not the core values. |
 | Vercel's Astro preset changes or breaks.                                             | Pin the Astro version in `package.json`; maintain a local `npm run build` check before relying on Vercel's build.                 |
 | PDF handouts grow large enough to bloat the repo.                                    | Revisit Git LFS per ADR-0003's open-items. Not v1.                                                                                 |
 | The upstream vault produces a file type we don't handle (e.g. `.canvas`, `.excalidraw`). | M1 sync skips non-allowlisted types silently; add coverage when it becomes real.                                                  |

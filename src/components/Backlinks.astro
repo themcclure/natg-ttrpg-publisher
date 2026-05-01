@@ -28,6 +28,7 @@ const sections = ORDER
 ---
 {sections.length > 0 && (
   <aside class="backlinks" aria-labelledby="backlinks-heading">
+    <p class="eyebrow">Cross-references</p>
     <h2 id="backlinks-heading">Referenced by</h2>
     {sections.map((s) => (
       <section>
@@ -41,3 +42,52 @@ const sections = ORDER
     ))}
   </aside>
 )}
+
+<style>
+  .backlinks {
+    margin: var(--space-7) 0 0;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+  .eyebrow {
+    margin: 0 0 var(--space-1);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .backlinks h2 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--fs-lg);
+  }
+  .backlinks section {
+    margin: 0 0 var(--space-4);
+  }
+  .backlinks section:last-child { margin-bottom: 0; }
+  .backlinks h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .backlinks ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+  }
+  .backlinks li { margin: 0; }
+  .backlinks a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .backlinks a:hover { text-decoration: underline; }
+</style>

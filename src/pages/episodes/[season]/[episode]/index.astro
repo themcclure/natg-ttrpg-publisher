@@ -63,7 +63,7 @@ function handoutSlug(id: string): string {
               <a href={`/episodes/${season}/${d.episode}/handouts/${handoutSlug(h.id)}/`}>
                 {h.data.title}
               </a>
-              {h.data.kind && <span class="kind"> — {h.data.kind}</span>}
+              {h.data.kind && <span class="kind">{h.data.kind}</span>}
             </li>
           ))}
           {pdfHandouts.map((p) => (
@@ -71,7 +71,8 @@ function handoutSlug(id: string): string {
               <a href={`/_assets/${p.filename}`} download>
                 {p.filename}
               </a>
-              <span class="size"> ({formatBytes(p.size)}, PDF)</span>
+              <span class="kind">PDF</span>
+              <span class="size">{formatBytes(p.size)}</span>
             </li>
           ))}
         </ul>
@@ -79,3 +80,62 @@ function handoutSlug(id: string): string {
     )}
   </article>
 </Layout>
+
+<style>
+  article > h1 {
+    margin-bottom: var(--space-2);
+  }
+  article > .air-date {
+    margin: 0 0 var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .handouts {
+    margin: var(--space-7) 0 0;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--link);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+  .handouts h2 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--fs-lg);
+  }
+  .handouts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .handouts li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .handouts a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .handouts a:hover { text-decoration: underline; }
+  .handouts .kind {
+    font-size: var(--fs-sm);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 1px var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .handouts .size {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+</style>

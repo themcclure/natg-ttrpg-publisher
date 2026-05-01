@@ -27,9 +27,9 @@ const { meta, episodes } = Astro.props as Props;
   <ul class="episode-list">
     {episodes.map((ep) => (
       <li>
-        <a href={`/episodes/${meta.season}/${ep.data.episode}/`}>
-          <span class="code"><strong>{ep.data.episode}</strong></span>
-          <span class="title"> — {ep.data.title}</span>
+        <a href={`/episodes/${meta.season}/${ep.data.episode}/`} class="episode-row">
+          <span class="code">{ep.data.episode}</span>
+          <span class="title">{ep.data.title}</span>
           <time class="air-date" datetime={ep.data.airDate}>{ep.data.airDate}</time>
         </a>
         <p class="teaser">{ep.data.teaser}</p>
@@ -37,3 +37,57 @@ const { meta, episodes } = Astro.props as Props;
     ))}
   </ul>
 </Layout>
+
+<style>
+  .episode-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .episode-list li {
+    margin: 0;
+    padding: 0 0 var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+  .episode-list li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .episode-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .episode-row .code {
+    font-family: var(--font-mono);
+    color: var(--link);
+    font-size: var(--fs-sm);
+    letter-spacing: 0.04em;
+    flex: 0 0 auto;
+  }
+  .episode-row .title {
+    font-weight: 600;
+    color: var(--fg);
+    font-size: var(--fs-md);
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .episode-row:hover .title { color: var(--link); }
+  .episode-row .air-date {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    flex: 0 0 auto;
+  }
+  .teaser {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    max-width: var(--max-content);
+  }
+</style>

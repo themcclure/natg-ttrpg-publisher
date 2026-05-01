@@ -5,16 +5,90 @@ import { getCurrentEpisode } from '../lib/episodes.ts';
 const current = await getCurrentEpisode();
 ---
 <Layout title="NATG Encyclopedia" description="Player-facing encyclopedia for the Not All That Glitters Is Latinum Star Trek TTRPG campaign.">
-  <h1>NATG Encyclopedia</h1>
+  <h1 class="hero-title">NATG Encyclopedia</h1>
   <p class="tagline">The player-facing reference for <em>Not All That Glitters Is Latinum</em>.</p>
 
   {current && <CurrentEpisodeCard episode={current} />}
 
   <nav aria-label="Sections" class="section-links">
     <ul>
-      <li><a href="/characters/"><strong>Characters</strong> — the party.</a></li>
-      <li><a href="/encyclopedia/"><strong>Encyclopedia</strong> — NPCs, factions, locations, starships, timelines.</a></li>
-      <li><a href="/episodes/"><strong>Episode Log</strong> — session recaps and handouts.</a></li>
+      <li>
+        <a href="/characters/">
+          <span class="label">Characters</span>
+          <span class="blurb">The party.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/encyclopedia/">
+          <span class="label">Encyclopedia</span>
+          <span class="blurb">NPCs, factions, locations, starships, timelines.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/episodes/">
+          <span class="label">Episode Log</span>
+          <span class="blurb">Session recaps and handouts.</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </Layout>
+
+<style>
+  .hero-title {
+    margin: 0 0 var(--space-2);
+    font-size: clamp(var(--fs-2xl), 6vw, 3rem);
+  }
+  .tagline {
+    margin: 0 0 var(--space-7);
+    font-size: var(--fs-md);
+    color: var(--muted);
+    max-width: var(--max-content);
+  }
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .section-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+  }
+  .section-links li { margin: 0; }
+  .section-links a {
+    display: block;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .section-links a:hover,
+  .section-links a:focus-visible {
+    border-color: var(--accent);
+    background: var(--tint-orange);
+  }
+  .section-links .label {
+    display: block;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: var(--space-1);
+  }
+  .section-links a:hover .label { color: var(--accent); }
+  .section-links .blurb {
+    display: block;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  @media (min-width: 720px) {
+    .section-links ul {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

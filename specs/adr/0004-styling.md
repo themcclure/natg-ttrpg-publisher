@@ -48,4 +48,4 @@ Tailwind is the obvious "modern default"; plain CSS is the obvious "boring defau
 
 ## Open items
 
-- The specific LCARS-inspired palette (exact color values, contrast pairings) is still a design decision tracked by Q03 and `04-design.md`. This ADR establishes *how* we express those values, not *what* they are.
+- None outstanding. The specific palette values (Q03) were resolved 2026-04-26 and live in `04-design.md` § Visual direction; this ADR continues to govern *how* they're expressed (CSS custom properties, single theme file, no hex outside it).

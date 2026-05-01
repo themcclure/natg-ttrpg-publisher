@@ -2,7 +2,7 @@
 
 Scope: information architecture, page composition per template, navigation patterns, accessibility conventions, and visual direction. Answers "what does each page show and how does it feel to read?" — not "how is it built" (that's `02-architecture.md` + `03-content-model.md`).
 
-Open: **Q03** (visual direction / palette specifics). This doc commits to the structural and accessibility decisions; palette values are stubbed and resolved in a later pass.
+Q03 (palette + typography) is **resolved** below in [Visual direction](#visual-direction). Light-mode support is deferred for v1 — site ships dark-only, with the palette structured as CSS custom properties so a light-mode swap is a one-file change later.
 
 ---
 
@@ -174,9 +174,9 @@ All of these extend R-NF-02 (WCAG 2.1 AA) with specifics.
 - **Semantic HTML**: `<header>`, `<nav>`, `<main>`, `<article>`, `<aside>`, `<footer>`. One `<h1>` per page; subheadings nested correctly.
 - **Skip link**: "Skip to content" as the first focusable element, revealing on focus.
 - **Focus management**: visible focus outline on all interactive elements; never `outline: none` without an equivalent.
-- **Contrast**: text ≥ 4.5:1, large text ≥ 3:1. Enforced in the palette pass (Q03).
+- **Contrast**: text ≥ 4.5:1, large text ≥ 3:1. All token pairs in the [Visual direction](#visual-direction) palette table meet AA; most meet AAA.
 - **Motion**: any animation respects `prefers-reduced-motion: reduce` (likely minimal animation in v1 regardless).
-- **Color scheme**: honors `prefers-color-scheme`; specific light/dark palettes pending Q03. CSS custom properties make this a single-file swap (ADR-0004).
+- **Color scheme**: dark-only for v1. `<meta name="color-scheme" content="dark">` declared so the browser renders form controls and scrollbars consistently. Adding a light variant later is a single-file change to `theme.css` (ADR-0004); no template churn required.
 - **Images**: every `<img>` has `alt`; author-written alt preferred, filename fallback warned but not blocking (R-NF-19).
 - **Touch targets**: interactive elements ≥ 44×44 px.
 - **Language**: `<html lang="en">`.
@@ -186,25 +186,101 @@ All of these extend R-NF-02 (WCAG 2.1 AA) with specifics.
 
 ## Visual direction
 
-Status: **Stub. Palette and typography specifics pending Q03.** This section lists the principles we commit to; the pass that answers Q03 fills in the concrete values.
+Q03 resolved 2026-04-26. The site ships **dark-only** with a single self-hosted font family and a low-saturation, outline-first interpretation of LCARS geometry. All concrete values below.
 
 ### Committed principles
 
 - **LCARS-inspired, not LCARS-replica.** Accent colors, rounded pill/elbow shapes, and color-blocked section headers are fair game. Full-chrome LCARS (angled panels, per-panel nav, stardate readouts) is out of scope — costs screen real estate and accessibility.
+- **Saturated colour for lines, not blocks.** Saturated accents are reserved for text, links, dividers, and 2–4px outlines/left-bars. Larger filled regions use **low-saturation tints** derived from the same accent family, so type-on-fill stays high-contrast without juggling per-block text colors.
 - **Content first.** Typography and line length optimized for reading long prose (65–75ch line length for body copy).
 - **One accent family.** A single set of accent colors used consistently across sections. Per-faction sub-themes are deferred (see the faction-icon open item in `03-content-model.md`).
-- **Self-hosted type.** Two font families at most: one for body, one for display/headers. Served from same-origin per R-NF-15.
+- **Self-hosted type.** A single variable font family served from same-origin per R-NF-15. A second display face is not required for v1; revisit if/when prose density increases.
 - **Palette in one file.** All colors as CSS custom properties in `src/styles/theme.css` (ADR-0004). No hex literals anywhere else.
 
-### Pending decisions (Q03)
+### Palette
 
-- Specific palette values (primary, accent, background, foreground, muted, danger/broken-link).
-- Light mode / dark mode / both.
-- Font choices.
-- Heading font weights and display treatment (pill-shaped title banner? plain?).
-- Icon treatment (external link ↗, PDF download, etc.).
+All tokens live on `:root` in `src/styles/theme.css`. Components reference them as `var(--color-…)` etc.
 
-These will be locked in a dedicated palette pass, ideally with a rendered skeleton of the site available for live iteration rather than prose-only design.
+**Core surfaces and text**
+
+| Token         | Hex       | Use                                        |
+|---------------|-----------|--------------------------------------------|
+| `--bg`        | `#0a0a14` | Page background                            |
+| `--surface`   | `#14141f` | Cards, panels, raised areas                |
+| `--border`    | `#2a2a3a` | Hairlines, dividers, panel edges           |
+| `--fg`        | `#e6e6f0` | Primary body text                          |
+| `--muted`     | `#9494a8` | Secondary text, captions, breadcrumb       |
+
+**Accents (saturated — for text, lines, outlines)**
+
+| Token         | Hex       | Use                                                         |
+|---------------|-----------|-------------------------------------------------------------|
+| `--accent`    | `#ff9966` | LCARS orange — outlines, dividers, decorative pills, headings ornamentation |
+| `--link`      | `#66ccff` | LCARS blue — wikilinks and anchor links                     |
+| `--link-vis`  | `#b18cff` | Visited links                                               |
+| `--broken`    | `#ff6680` | Broken/unresolved wikilinks (`.wikilink-broken`)            |
+| `--ok`        | `#7ed3a1` | Resolved/success affordance (rare; reserved for badges)     |
+
+**Surface tints (low-saturation — for filled blocks)**
+
+Pair each tint with its accent as a 2–4px outline or left-bar to bring saturation back without compromising legibility.
+
+| Token            | Hex       | Pairs with     |
+|------------------|-----------|----------------|
+| `--tint-orange`  | `#2a221d` | `--accent`     |
+| `--tint-blue`    | `#1d2530` | `--link`       |
+| `--tint-purple`  | `#25202e` | `--link-vis`   |
+
+**Contrast (R-NF-02 / WCAG 2.1 AA)**
+
+| Pair                                  | Ratio   | Meets |
+|---------------------------------------|---------|-------|
+| `--fg` on `--bg`                      | 15.7:1  | AAA   |
+| `--fg` on `--surface`                 | 13.2:1  | AAA   |
+| `--muted` on `--bg`                   | 6.7:1   | AA    |
+| `--accent` on `--bg`                  | 9.1:1   | AAA   |
+| `--link` on `--bg`                    | 10.4:1  | AAA   |
+| `--broken` on `--bg`                  | 5.7:1   | AA    |
+| `--fg` on `--tint-orange`             | 13.0:1  | AAA   |
+| `--fg` on `--tint-blue`               | 12.4:1  | AAA   |
+
+### Typography
+
+- **Family.** [Inter Variable](https://rsms.me/inter/), self-hosted under `public/fonts/` per R-NF-15. One file (`Inter-roman.var.woff2`) covers regular through bold via `font-weight` axis; we omit the italic file unless authoring shows it's needed.
+- **Fallback stack.** `'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif` so pages render before the font finishes loading and on environments where it fails.
+- **Body.** 16px / 1.55 line-height, weight 400. Line length capped at 70ch on the article container.
+- **Headings.** Same family, weights 600 (h2/h3) and 700 (h1). Letter-spacing tightened slightly on h1 (`-0.01em`).
+- **Caption / metadata.** 13px, weight 500, `letter-spacing: 0.04em`, often `text-transform: uppercase` for collection labels and section eyebrows (LCARS-flavored without committing to LCARS).
+- **Monospace.** `ui-monospace, SFMono-Regular, Menlo, monospace` for code spans and registry IDs. Not self-hosted — system-mono is universal and avoids a second font download.
+
+Font loading: `font-display: swap`, single `@font-face` declaration. No FOIT, no JS-driven font loader.
+
+### Geometry
+
+- **Pills and elbows.** Border-radius up to `999px` for pills (collection tags, season chips). LCARS "elbow" corners (large radius on one corner, sharp on the opposite) reserved for section headers — used sparingly so the look stays light.
+- **Header blocks.** Section headers use the **tint-fill + accent left-bar** pattern: e.g. `--tint-blue` background with a 4px `--link` left border. Keeps the geometry colourful without flooding text-on-saturated-fill territory.
+- **Pill variants.**
+  - *Outline pill.* Transparent fill, 2px accent border, accent text. Default for category/collection labels.
+  - *Filled pill.* Low-sat tint background, `--fg` text. Used where a chip needs to read as "active" or selected (e.g. season indicator on the season page).
+- **Dividers.** 2px `--accent`-colored horizontal rule between major page regions, sparingly.
+- **Corners.** Standard radii: `4px` (inputs/swatches), `6–8px` (panels and cards), `999px` (pills).
+
+### Iconography
+
+- **External link (↗).** Inline `↗` glyph (U+2197) appended to the visible text of external anchors. No icon font, no SVG, no extra HTTP request. CSS rule on `a[href^="http"]:not([href*="natg-..."])` so author markdown stays clean.
+- **PDF / download.** A small inline SVG placed alongside PDF handout links. Single file, inlined via Astro component to avoid a per-page sprite.
+- **No icon framework.** No Heroicons, Phosphor, Lucide etc. — keeps R-NF-04 page weight tight.
+
+### Per-template visual notes (carried forward)
+
+These extend the structural template list above with the palette/typography decisions now locked.
+
+- **Landing.** Title in h1 `--fg`. Current-episode card uses the `--tint-blue` + `--link` left-bar pattern. Three section cards use outline pills above a one-line explainer.
+- **Collection index.** Section title h1; per-row title in `--fg`, aliases in `--muted` italic, summary in `--muted`. No row dividers — vertical rhythm carried by line-height.
+- **Entity / Location.** Metadata strip in `--muted`, separated by `·`. Backlinks heading uses the eyebrow caption style (small caps, `--muted`). "Contains" list on locations follows the same pattern.
+- **Episode log / Season / Episode.** Season chip in filled-pill style. S##E## codes set in monospace.
+- **Handout.** Minimal — title, kind caption, body. No chrome.
+- **About / 404.** Plain prose; no LCARS geometry. About page uses the same article container as entity body.
 
 ---
 
@@ -217,7 +293,11 @@ These will be locked in a dedicated palette pass, ideally with a rendered skelet
 
 ## Open items
 
-- **Q03** (palette + typography specifics) — unresolved, deliberately. Revisit after M1+M2 ship a working but unstyled skeleton.
 - Whether `/encyclopedia/` is a meaningful page or should redirect straight to the first sub-collection. Keeping it as a real page for now — it gives the site a more discoverable shape.
 - Whether the global nav should collapse to a hamburger on narrow viewports, or stay inline. Four nav items fit inline at 320px with compact labels; leaning inline, no hamburger.
 - Handling for very long alias lists on entity pages (truncate with "+3 more" or wrap freely). Defer until real content reveals whether this is actually a problem.
+- Light-mode palette. Deferred for v1 — site is dark-only. When a light variant is added, it lands as a `prefers-color-scheme: light` block in `theme.css` overriding the same token names; no template changes.
+
+## Resolved items
+
+- **Q03** (palette + typography) — resolved 2026-04-26. See [Visual direction](#visual-direction). Dark-only for v1; single self-hosted font (Inter Variable); saturated-line / low-sat-fill geometry approach.

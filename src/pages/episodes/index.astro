@@ -19,10 +19,51 @@ const seasons = await groupEpisodesBySeason();
     {seasons.map((s) => (
       <li>
         <a href={`/episodes/${s.meta.season}/`}>
-          <strong>{s.meta.displayName}</strong>
-          <span class="count"> — {s.episodes.length} {s.episodes.length === 1 ? 'episode' : 'episodes'}</span>
+          <span class="name">{s.meta.displayName}</span>
+          <span class="count">{s.episodes.length} {s.episodes.length === 1 ? 'episode' : 'episodes'}</span>
         </a>
       </li>
     ))}
   </ul>
 </Layout>
+
+<style>
+  .season-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 0;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+  .season-list li { margin: 0; }
+  .season-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    text-decoration: none;
+    color: var(--fg);
+    transition: background var(--transition-fast);
+  }
+  .season-list a:hover,
+  .season-list a:focus-visible {
+    background: var(--tint-orange);
+  }
+  .season-list .name {
+    font-weight: 600;
+    font-size: var(--fs-md);
+    color: var(--fg);
+  }
+  .season-list a:hover .name { color: var(--accent); }
+  .season-list .count {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+</style>

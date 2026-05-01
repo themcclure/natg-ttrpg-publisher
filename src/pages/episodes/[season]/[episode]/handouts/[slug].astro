@@ -46,7 +46,18 @@ const epLabel = epEntry ? `${episode} ${epEntry.data.title}` : episode;
   ]} />
   <article>
     <h1>{d.title}</h1>
-    {d.kind && <p class="kind"><em>{d.kind}</em></p>}
+    {d.kind && <p class="handout-kind">{d.kind}</p>}
     <div class="body"><Content /></div>
   </article>
 </Layout>
+
+<style>
+  .handout-kind {
+    margin: 0 0 var(--space-5);
+    font-size: var(--fs-sm);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+</style>

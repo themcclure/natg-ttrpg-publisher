@@ -10,14 +10,62 @@ const season = seasonOf(episode.data.episode);
 const href = `/episodes/${season}/${episode.data.episode}/`;
 ---
 <aside class="current-episode-card" aria-labelledby="current-episode-heading">
-  <h2 id="current-episode-heading">{heading}</h2>
-  <p class="episode-code">
+  <p class="eyebrow">{heading}</p>
+  <h2 id="current-episode-heading" class="episode-heading">
     <a href={href}>
-      <strong>{episode.data.episode}</strong> — {episode.data.title}
+      <span class="code">{episode.data.episode}</span>
+      <span class="title">{episode.data.title}</span>
     </a>
-  </p>
+  </h2>
   <p class="air-date">
     <time datetime={episode.data.airDate}>First played: {episode.data.airDate}</time>
   </p>
   <p class="teaser">{episode.data.teaser}</p>
 </aside>
+
+<style>
+  .current-episode-card {
+    background: var(--tint-blue);
+    border-left: 4px solid var(--link);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--space-5) var(--space-5);
+    margin: 0 0 var(--space-6);
+  }
+  .eyebrow {
+    margin: 0 0 var(--space-2);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .episode-heading {
+    margin: 0 0 var(--space-3);
+    font-size: var(--fs-xl);
+  }
+  .episode-heading a {
+    color: var(--fg);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .episode-heading a:hover { color: var(--link); }
+  .episode-heading .code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--link);
+    letter-spacing: 0.04em;
+  }
+  .air-date {
+    margin: 0 0 var(--space-3);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .teaser {
+    margin: 0;
+    color: var(--fg);
+    max-width: var(--max-content);
+  }
+</style>

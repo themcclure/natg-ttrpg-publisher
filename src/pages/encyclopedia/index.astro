@@ -34,3 +34,48 @@ const sections = [
     ))}
   </ul>
 </Layout>
+
+<style>
+  .encyclopedia-tiles {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+  }
+  .encyclopedia-tiles li { margin: 0; }
+  .encyclopedia-tiles a {
+    display: block;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--link);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    text-decoration: none;
+    color: var(--fg);
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+  .encyclopedia-tiles a:hover,
+  .encyclopedia-tiles a:focus-visible {
+    background: var(--tint-blue);
+    border-left-color: var(--accent);
+  }
+  .encyclopedia-tiles h2 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--fs-lg);
+    color: var(--fg);
+  }
+  .encyclopedia-tiles a:hover h2 { color: var(--link); }
+  .encyclopedia-tiles p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  @media (min-width: 600px) {
+    .encyclopedia-tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .encyclopedia-tiles { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

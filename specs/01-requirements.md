@@ -106,13 +106,13 @@ Requirement IDs are stable. Other specs cite them (e.g. "satisfies R-F-12"). App
 
 ## Open questions
 
-- **Q03 — Visual design direction.** LCARS-inspired palette acceptable, but full LCARS chrome is out. Needs a design pass (specs/04-design.md) before implementation.
 - **Q07 — Image optimization.** Astro's `<Image>` component requires images to be imported, which is awkward with markdown-authored references. Either accept unoptimized images in v1, or invest in a remark plugin that rewrites refs. Defer.
 
 ### Resolved
 
 - **Q01 (resolved)** — Characters section sourced from a presumed `characters/` folder in the vault; same schema as NPCs for v1.
 - **Q02 (resolved)** — Vercel is the initial deployment target. May change later; ADR-0001 is accepted.
+- **Q03 (resolved 2026-04-26)** — LCARS-inspired, dark-only palette and single self-hosted font (Inter Variable). Saturated colours used for text/lines/outlines; large filled blocks use low-saturation tints. Specifics in `04-design.md` § Visual direction.
 - **Q04 (resolved)** — Wikilink normalization + resolution order specified in ADR-0002 (accepted).
 - **Q05 (resolved)** — Timelines are chronological-list markdown; mix of a single PC-focused master and optional per-entity timelines. No structured schema in v1 (R-F-17).
 - **Q06 (resolved)** — Seasons are a navigation level; `S00` displays as "Pilot" via season `displayName`.
