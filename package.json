@@ -19,7 +19,7 @@
     "astro": "^6.0.0",
     "gray-matter": "^4.0.3",
     "unist-util-visit": "^5.0.0",
-    "zod": "^4.0.0"
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
