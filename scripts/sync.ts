@@ -33,6 +33,13 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, '..');
 const destDir = resolve(repoRoot, 'src', 'content');
 const assetsDir = resolve(repoRoot, 'public', '_assets');
+// Astro caches rendered markdown (data-store.json) and content-collection
+// types under these paths. When sync replaces every file under src/content/,
+// Astro doesn't always invalidate them — stale cache hits silently suppress
+// remark-plugin warnings (notably wikilink warnings) on the next build.
+// Clearing both at sync time guarantees the next build sees the new content.
+const astroProjectCache = resolve(repoRoot, '.astro');
+const astroDataCache = resolve(repoRoot, 'node_modules', '.astro');
 
 interface SyncCounts {
   copied: number;
@@ -66,6 +73,8 @@ async function main(): Promise<void> {
   await mkdir(destDir, { recursive: true });
   await rm(assetsDir, { recursive: true, force: true });
   await mkdir(assetsDir, { recursive: true });
+  await rm(astroProjectCache, { recursive: true, force: true });
+  await rm(astroDataCache, { recursive: true, force: true });
   seenAssetBasenames.clear();
 
   // Warn about unknown top-level folders (R-F-04).
