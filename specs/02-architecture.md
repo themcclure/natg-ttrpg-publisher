@@ -44,10 +44,12 @@ Key invariant: **`src/content/` is the build-time source of truth.** The externa
 ### Sync (`npm run sync`)
 
 1. Read source path from project config (env var or `natg.config.ts`, TBD in implementation).
-2. Remove `src/content/` entirely.
-3. Recursively copy supported files from source (see R-F-03) into `src/content/`, preserving structure.
+2. Remove `src/content/` and `public/_assets/` entirely.
+3. Recursively walk the source (see R-F-03) and route files by type:
+   - **Markdown** (`.md`) → `src/content/<relPath>` (preserving folder structure).
+   - **Assets** (images, PDFs) → `public/_assets/<basename>` (flat by basename per ADR-0002). The vault's organizational structure for assets — whether they sit in `images/` or alongside markdown in a collection folder — is collapsed to a single flat URL space at serve time.
 4. Skip files starting with `_` or `.`; skip any `CLAUDE.md` at any depth. Preserve `episodes/S##/_season.md` (leading underscore but name-matched).
-5. Print a summary: files copied per collection, bytes, duration.
+5. Print a summary: files copied per collection, bytes, asset basename collisions, duration.
 6. Exit non-zero if the source path is missing or unreadable.
 
 See ADR-0003 for why copy (vs. symlink / direct read).
@@ -60,7 +62,7 @@ Astro invokes the content loader, which:
 2. Pre-builds a **link index** mapping normalized slugs → `{collection, slug, title}` for wikilink resolution.
 3. Runs the markdown pipeline per entry:
    - **Wikilink remark plugin** rewrites `[[target]]` / `[[target|alias]]` / `![[image.png]]` per ADR-0002.
-   - **Asset rewrite plugin** resolves image/PDF references to their copied path under `src/content/`.
+   - **Asset rewrite plugin** resolves image/PDF references to their flat URL under `/_assets/<basename>` (assets live in `public/_assets/`, never under `src/content/`).
    - **Frontmatter validator** fails the build on schema mismatch (R-F-13).
 4. Renders pages via Astro page templates (see Routes below).
 5. Emits a **warnings report** at end of build: unresolved links, missing assets, empty collections (R-F-53).
@@ -88,7 +90,7 @@ During build, as each entry's links are resolved, the reverse edges are accumula
 | `/episodes/[season]/`                           | Season page (e.g. `/episodes/S00/`)               | Derived; uses `_season.md` display name   |
 | `/episodes/[season]/[episode]/`                 | Episode page (e.g. `/episodes/S00/S00E01/`)       | `episodes/S##E##/index.md`                |
 | `/episodes/[season]/[episode]/handouts/[slug]/` | Handout page (markdown handouts only)             | `handouts/S##E##/[slug].md`               |
-| `/assets/…`                                     | Images and PDFs (direct file serving)             | Copied from source                        |
+| `/_assets/<basename>`                           | Images and PDFs (direct file serving)             | `public/_assets/` (flat mirror)           |
 
 Slug rules: kebab-case from filename, lowercased. Collisions within a collection fail the build.
 

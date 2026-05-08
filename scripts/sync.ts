@@ -37,7 +37,8 @@ const assetsDir = resolve(repoRoot, 'public', '_assets');
 interface SyncCounts {
   copied: number;
   skipped: number;
-  bytes: number;
+  contentBytes: number;
+  assetBytes: number;
   assetsCopied: number;
   assetCollisions: number;
 }
@@ -80,7 +81,8 @@ async function main(): Promise<void> {
   const counts: SyncCounts = {
     copied: 0,
     skipped: 0,
-    bytes: 0,
+    contentBytes: 0,
+    assetBytes: 0,
     assetsCopied: 0,
     assetCollisions: 0,
   };
@@ -88,8 +90,8 @@ async function main(): Promise<void> {
 
   const elapsed = Date.now() - started;
   console.log('');
-  console.log(`  Wrote ${counts.copied} files to src/content/ (${formatBytes(counts.bytes)})`);
-  console.log(`  Mirrored ${counts.assetsCopied} assets to public/_assets/`);
+  console.log(`  Wrote ${counts.copied} files to src/content/ (${formatBytes(counts.contentBytes)})`);
+  console.log(`  Mirrored ${counts.assetsCopied} assets to public/_assets/ (${formatBytes(counts.assetBytes)})`);
   if (counts.assetCollisions > 0) {
     console.log(`  ${counts.assetCollisions} asset filename collision(s) — see warnings above`);
   }
@@ -126,18 +128,13 @@ async function walk(root: string, current: string, counts: SyncCounts): Promise<
       continue;
     }
 
-    const destPath = join(destDir, relPath);
-    await mkdir(dirname(destPath), { recursive: true });
-    await copyFile(srcPath, destPath);
-    const s = await stat(srcPath);
-    counts.bytes += s.size;
-    counts.copied++;
-
-    // Mirror asset files into public/_assets/ (flat, by basename) so the
-    // static build can serve them. R-F-02. M4-full will replace the flat
-    // mirror with index-based path resolution.
     const ext = extname(entry.name).toLowerCase();
-    if (ASSET_EXTENSIONS.has(ext)) {
+    const isAsset = ASSET_EXTENSIONS.has(ext);
+
+    // Assets land in public/_assets/ only (flat, by basename). Markdown lands
+    // in src/content/ only. Two destinations, by type — no duplication.
+    // R-F-02 / ADR-0002 (filename-first resolution → flat URL space).
+    if (isAsset) {
       const previous = seenAssetBasenames.get(entry.name);
       if (previous && previous !== relPath) {
         console.warn(
@@ -147,7 +144,16 @@ async function walk(root: string, current: string, counts: SyncCounts): Promise<
       }
       seenAssetBasenames.set(entry.name, relPath);
       await copyFile(srcPath, join(assetsDir, entry.name));
+      const s = await stat(srcPath);
+      counts.assetBytes += s.size;
       counts.assetsCopied++;
+    } else {
+      const destPath = join(destDir, relPath);
+      await mkdir(dirname(destPath), { recursive: true });
+      await copyFile(srcPath, destPath);
+      const s = await stat(srcPath);
+      counts.contentBytes += s.size;
+      counts.copied++;
     }
   }
 }

@@ -8,12 +8,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/verify-content.ts && astro build",
+    "build": "node --env-file-if-exists=.env scripts/verify-content.ts && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "sync": "node scripts/sync.ts",
-    "verify": "node scripts/verify-content.ts"
+    "sync": "node --env-file-if-exists=.env scripts/sync.ts",
+    "verify": "node --env-file-if-exists=.env scripts/verify-content.ts"
   },
   "dependencies": {
     "astro": "^6.0.0",
