@@ -7,6 +7,9 @@ tags:
   - faction
   - illari
   - independent
+title: "Illari Sphere"
+summary: "Total isolationists; crossing their border without permission triggers immediate escalating enforcement."
+kind: "government"
 ---
 
 # Illari Sphere

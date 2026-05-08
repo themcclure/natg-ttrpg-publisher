@@ -6,6 +6,12 @@ tags:
   - encyclopedia
   - character
   - pc
+title: "Amani"
+summary: "Risian science officer; cultural diplomat by training, finds the leverage point others miss."
+species: "Risian"
+affiliation: "Starfleet"
+role: "Overnight Operations"
+player: "Vivien"
 ---
 
 # Amani

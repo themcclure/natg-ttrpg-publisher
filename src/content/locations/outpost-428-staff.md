@@ -7,6 +7,11 @@ tags:
   - location
   - outpost
   - staff-areas
+title: "Outpost 428 — Staff Areas"
+summary: "Staff and operational areas of Outpost 428; crew quarters, operations, and maintenance."
+kind: "establishment"
+sovereignty: "Starfleet"
+container: "outpost-428"
 ---
 
 # Outpost 428 — Staff Areas

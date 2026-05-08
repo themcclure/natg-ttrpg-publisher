@@ -7,6 +7,9 @@ tags:
   - faction
   - romulan
   - major-power
+title: "Romulan Star Empire"
+summary: "Imperial power with weakened intelligence apparatus; fought alongside Federation but remains deeply suspicious."
+kind: "government"
 ---
 
 # Romulan Star Empire

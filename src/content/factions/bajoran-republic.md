@@ -7,6 +7,9 @@ tags:
   - faction
   - bajoran
   - major-power
+title: "Bajoran Republic"
+summary: "Post-Occupation Federation ally; still rebuilding after fifty years of Cardassian rule."
+kind: "government"
 ---
 
 # Bajoran Republic

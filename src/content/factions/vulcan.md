@@ -7,6 +7,9 @@ tags:
   - faction
   - vulcan
   - federation-member
+title: "Vulcan"
+summary: "Oldest Federation member; most politically influential non-human species; strong post-war institutional continuity."
+kind: "government"
 ---
 
 # Vulcan

@@ -6,6 +6,15 @@ tags:
   - encyclopedia
   - character
   - pc
+title: "Sidney Mercer"
+aliases:
+  - "Sid"
+  - "Sid Mercer"
+summary: "Civilian contractor with a Starfleet family name and a quiet Academy exit on his record."
+species: "Human"
+affiliation: "Civilian"
+role: "Overnight Operations"
+player: "Brian"
 ---
 
 # Sidney "Sid" Mercer

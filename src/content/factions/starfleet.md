@@ -8,6 +8,9 @@ tags:
   - starfleet
   - federation
   - major-power
+title: "Starfleet"
+summary: "Federation exploratory and defense service; responsible for deep-space operations, diplomacy, and response."
+kind: "military"
 ---
 
 # Starfleet

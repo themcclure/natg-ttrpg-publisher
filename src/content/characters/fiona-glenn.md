@@ -6,6 +6,14 @@ tags:
   - encyclopedia
   - character
   - pc
+title: "Fiona Glenn"
+aliases:
+  - "Fiona"
+summary: "Human doctor-scientist; too curious to stay in one discipline, too stubborn to quit."
+species: "Human"
+affiliation: "Starfleet"
+role: "Overnight Operations"
+player: "Liz"
 ---
 
 # Fiona Glenn

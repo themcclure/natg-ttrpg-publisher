@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Illari System"
+summary: "Home of the Illari Sphere; unauthorized border crossing triggers immediate escalating enforcement."
+kind: "system"
+sovereignty: "Illari Sphere"
+container: "persephone-sector"
 ---
 
 # Illari System

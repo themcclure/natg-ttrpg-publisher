@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Kelvar System"
+summary: "Kelvari Reflection colony system; offshoot Varanid culture maintaining independence and distinct identity."
+kind: "system"
+sovereignty: "Kelvari Reflection"
+container: "persephone-sector"
 ---
 
 # Kelvar System

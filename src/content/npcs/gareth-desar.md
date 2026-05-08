@@ -7,6 +7,11 @@ tags:
   - npc
   - outpost-428
   - director
+title: "Gareth Desar"
+summary: "Director of Outpost 428; managing a complex frontier sector posting."
+species: "Human"
+affiliation: "Starfleet"
+role: "Director, Outpost 428"
 ---
 
 # Gareth Desar

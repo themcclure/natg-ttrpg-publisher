@@ -6,6 +6,10 @@ tags:
   - encyclopedia
   - location
   - sector
+title: "Persephone Sector"
+summary: "Frontier sector at the edge of Federation space; complex geometry creates unusual navigational challenges."
+kind: "sector"
+sovereignty: "Federation"
 ---
 
 # Persephone Sector

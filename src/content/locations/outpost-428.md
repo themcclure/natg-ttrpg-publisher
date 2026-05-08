@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - outpost
+title: "Outpost 428"
+summary: "Starfleet frontier station at the Persephone System; operational hub for the overnight crew."
+kind: "station"
+sovereignty: "Starfleet"
+container: "persephone-system"
 ---
 
 # Outpost 428

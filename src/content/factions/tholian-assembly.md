@@ -7,6 +7,9 @@ tags:
   - faction
   - tholian
   - major-power
+title: "Tholian Assembly"
+summary: "Silicon-based isolationist power adjacent to the sector; intensely territorial, no direct contact achieved."
+kind: "government"
 ---
 
 # Tholian Assembly

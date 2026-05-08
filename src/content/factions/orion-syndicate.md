@@ -7,6 +7,9 @@ tags:
   - faction
   - orion-syndicate
   - criminal
+title: "Orion Syndicate"
+summary: "Criminal network operating wherever Federation law thins; uses Orion cultural networks as cover."
+kind: "criminal"
 ---
 
 # Orion Syndicate

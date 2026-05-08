@@ -7,6 +7,9 @@ tags:
   - faction
   - breen
   - major-power
+title: "Breen Confederacy"
+summary: "Enigmatic militant power; attacked Earth during the Dominion War; motivations remain poorly understood."
+kind: "government"
 ---
 
 # Breen Confederacy

@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Fenric System"
+summary: "Navigation junction near the Geometry edge; hosts a Kheth refugee community on Fenric II."
+kind: "system"
+sovereignty: "Fenric Identity"
+container: "persephone-sector"
 ---
 
 # Fenric's Star System

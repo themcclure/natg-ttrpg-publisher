@@ -7,6 +7,11 @@ tags:
   - location
   - outpost
   - public-areas
+title: "Outpost 428 — Public Areas"
+summary: "Civilian-accessible areas of Outpost 428; docking, commercial, and common spaces."
+kind: "establishment"
+sovereignty: "Starfleet"
+container: "outpost-428"
 ---
 
 # Outpost 428 — Public Areas

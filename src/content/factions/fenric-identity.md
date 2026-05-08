@@ -6,6 +6,9 @@ tags:
   - encyclopedia
   - faction
   - fenric
+title: "Fenric Identity"
+summary: "Indigenous sentient species of Fenric II; highly heat-sensitive, territorial, recently contacted."
+kind: "indigenous"
 ---
 
 # Fenric Identity

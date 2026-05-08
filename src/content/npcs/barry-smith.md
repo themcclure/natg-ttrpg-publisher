@@ -7,6 +7,11 @@ tags:
   - npc
   - outpost-428
   - security
+title: "Barry Smith"
+summary: "Starfleet Chief of Security; quiet, professional, knows the outpost inside and out."
+species: "Human"
+affiliation: "Starfleet"
+role: "Chief of Security"
 ---
 
 # Barry Smith

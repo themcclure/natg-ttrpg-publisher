@@ -6,6 +6,9 @@ tags:
   - encyclopedia
   - faction
   - kheth
+title: "Kheth Confederacy"
+summary: "Spacefaring insectoid species displaced from their home system, building a new presence at Fenric."
+kind: "government"
 ---
 
 # Kheth Confederacy

@@ -8,6 +8,9 @@ tags:
   - kelvari
   - independent
   - varanid-offshoot
+title: "Kelvari Reflection"
+summary: "Varanid offshoot colony maintaining distinct cultural identity; known for the reflective pool rite."
+kind: "government"
 ---
 
 # Kelvari Reflection

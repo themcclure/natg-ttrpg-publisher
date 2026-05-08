@@ -6,6 +6,14 @@ tags:
   - encyclopedia
   - character
   - pc
+title: "Velin Razar"
+aliases:
+  - "Velin"
+summary: "Orion helmsman; grew up on a smuggler crew, still chasing the next horizon."
+species: "Orion"
+affiliation: "Starfleet"
+role: "Overnight Operations"
+player: "Pat"
 ---
 
 # Velin Razar

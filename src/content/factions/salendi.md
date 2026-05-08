@@ -7,6 +7,9 @@ tags:
   - faction
   - salendi
   - independent
+title: "Salendi"
+summary: "Pre-warp humanoid species on Salend IV; striking resemblance to humans; contact status sensitive."
+kind: "indigenous"
 ---
 
 # Salendi

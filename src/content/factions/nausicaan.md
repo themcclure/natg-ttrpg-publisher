@@ -7,6 +7,9 @@ tags:
   - faction
   - nausicaan
   - mercenary
+title: "Nausicaan"
+summary: "Mercenary species with no central government; commonly associated with criminal enforcement work."
+kind: "species"
 ---
 
 # Nausicaan

@@ -7,6 +7,9 @@ tags:
   - faction
   - cardassian
   - major-power
+title: "Cardassian Union"
+summary: "Post-war imperial remnant; devastated by the Dominion at war end, slowly rebuilding."
+kind: "government"
 ---
 
 # Cardassian Union

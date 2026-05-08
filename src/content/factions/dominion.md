@@ -7,6 +7,11 @@ tags:
   - faction
   - dominion
   - major-power
+title: "Dominion"
+aliases:
+  - "The Dominion"
+summary: "Gamma Quadrant power ruled by the Founders; responsible for the war that reshaped the quadrant."
+kind: "government"
 ---
 
 # Dominion

@@ -7,6 +7,12 @@ tags:
   - faction
   - federation
   - major-power
+title: "United Federation of Planets"
+aliases:
+  - "UFP"
+  - "The Federation"
+summary: "Democratic interstellar alliance of over 150 member worlds; primary governance framework for known space."
+kind: "government"
 ---
 
 # Federation

@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Varanidia System"
+summary: "Home system of the Varanid Authority; established industrial and diplomatic infrastructure."
+kind: "system"
+sovereignty: "Varanid Authority"
+container: "persephone-sector"
 ---
 
 # Varanidia System

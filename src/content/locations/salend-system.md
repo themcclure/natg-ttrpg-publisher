@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Salend System"
+summary: "Inhabited by the pre-warp Salendi; human-like appearance noted; Federation contact status sensitive."
+kind: "system"
+sovereignty: "Salendi"
+container: "persephone-sector"
 ---
 
 # Salend System

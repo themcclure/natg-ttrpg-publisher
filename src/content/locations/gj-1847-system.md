@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "GJ 1847 System"
+summary: "Kheth Confederacy home system; recovering from a catastrophe that displaced most of the population."
+kind: "system"
+sovereignty: "Kheth Confederacy"
+container: "persephone-sector"
 ---
 
 # GJ-1847 System

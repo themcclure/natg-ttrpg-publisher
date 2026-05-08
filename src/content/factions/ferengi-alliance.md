@@ -7,6 +7,9 @@ tags:
   - faction
   - ferengi
   - major-power
+title: "Ferengi Alliance"
+summary: "Commerce-driven government; technically neutral but present wherever profit exists."
+kind: "government"
 ---
 
 # Ferengi Alliance

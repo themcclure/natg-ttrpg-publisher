@@ -6,6 +6,11 @@ tags:
   - encyclopedia
   - location
   - system
+title: "Persephone System"
+summary: "Quadruple red dwarf system with a large debris cloud; home to Outpost 428."
+kind: "system"
+sovereignty: "Starfleet"
+container: "persephone-sector"
 ---
 
 # Persephone System

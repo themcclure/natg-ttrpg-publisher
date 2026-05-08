@@ -7,6 +7,9 @@ tags:
   - faction
   - klingon
   - major-power
+title: "Klingon Empire"
+summary: "Federation ally; honorable warrior culture; primary military partner post-Dominion War."
+kind: "government"
 ---
 
 # Klingon Empire

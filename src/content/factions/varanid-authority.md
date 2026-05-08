@@ -6,6 +6,9 @@ tags:
   - encyclopedia
   - faction
   - varanid
+title: "Varanid Authority"
+summary: "Dominant regional power; silicon-composite species with strong commercial influence over sector neighbors."
+kind: "government"
 ---
 
 # Varanid Authority
